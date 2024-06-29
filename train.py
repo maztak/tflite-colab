@@ -13,17 +13,22 @@ from tflite_model_maker.image_classifier import DataLoader
 
 import matplotlib.pyplot as plt
 
+print("Getting data path..")
 image_path = tf.keras.utils.get_file(
       'dataset.zip',
       '/content/dataset.zip',
       extract=True)
 image_path = os.path.join(os.path.dirname(image_path), 'dataset')
 
+print("Loading data..")
 data = DataLoader.from_folder(image_path)
 train_data, test_data = data.split(0.9)
 
+print("Creating model..")
 model = image_classifier.create(train_data)
 
+print("Evaluating model..")
 loss, accuracy = model.evaluate(test_data)
 
+print("Exporting model..")
 model.export(export_dir='.')
