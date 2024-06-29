@@ -15,7 +15,7 @@ import matplotlib.pyplot as plt
 
 image_path = tf.keras.utils.get_file(
       'dataset.zip',
-      '/content/drive/MyDrive/Project/yachogo/dataset.zip',
+      '/content/dataset.zip',
       extract=True)
 image_path = os.path.join(os.path.dirname(image_path), 'dataset')
 
