@@ -1,3 +1,4 @@
+import zipfile
 import os
 
 import numpy as np
@@ -14,11 +15,15 @@ from tflite_model_maker.image_classifier import DataLoader
 import matplotlib.pyplot as plt
 
 print("Getting data path..")
-image_path = tf.keras.utils.get_file(
-      'dataset.zip',
-      '/content/dataset.zip',
-      extract=True)
-image_path = os.path.join(os.path.dirname(image_path), 'dataset')
+# 指定したパスにある dataset.zip ファイルを解凍する
+with zipfile.ZipFile('/content/drive/MyDrive/Project/yachogo/dataset.zip', 'r') as zip_ref:
+      # encode directory name to cp437, and decode to utf-8
+      for info in zip_ref.infolist():
+          info.filename = info.filename.encode('cp437').decode('utf-8')
+          zip_ref.extract(info, '/content')
+
+# 解凍されたファイルのパスを取得
+image_path = '/content/dataset'
 
 print("Loading data..")
 data = DataLoader.from_folder(image_path)
